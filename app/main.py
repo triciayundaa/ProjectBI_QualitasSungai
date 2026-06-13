@@ -125,7 +125,7 @@ with col_f3:
 
 with col_f4:
     st.markdown("<div style='padding-top: 28px;'></div>", unsafe_allow_html=True)
-    btn_reset = st.button("🔄 Reset Filter", use_container_width=True)
+    btn_reset = st.button("🔄 Reset Filter", width='stretch')
 
 if btn_reset:
     st.rerun()
@@ -185,7 +185,7 @@ with col_g1:
         template='simple_white'
     )
     fig_rank.update_layout(height=350, margin=dict(l=0, r=0, t=10, b=0), showlegend=False)
-    st.plotly_chart(fig_rank, use_container_width=True)
+    st.plotly_chart(fig_rank, width='stretch')
 
 with col_g2:
     st.subheader("📈 Tren Pelanggaran per Periode (2024)")
@@ -194,7 +194,7 @@ with col_g2:
     fig_trend = px.line(df_trend, x='periode_pemantauan', y='Pelanggaran', markers=True, template='simple_white')
     fig_trend.update_traces(line_color='#d93025', line_width=4, marker=dict(size=10))
     fig_trend.update_layout(height=350, margin=dict(l=0, r=0, t=10, b=0))
-    st.plotly_chart(fig_trend, use_container_width=True)
+    st.plotly_chart(fig_trend, width='stretch')
 
 # =========================================
 # 7. GRAFIK BARIS KEDUA (BOD/COD & PARAMETER ESENSIAL)
@@ -223,7 +223,7 @@ else:
 
 col_g3, col_g4 = st.columns([3, 2])
 with col_g3:
-    st.plotly_chart(fig_bod_cod, use_container_width=True)
+    st.plotly_chart(fig_bod_cod, width='stretch')
 
 with col_g4:
     st.subheader("⚠ Top 10 Parameter Paling Sering Melebihi Baku Mutu")
@@ -234,7 +234,7 @@ with col_g4:
         fig_param = px.bar(df_param_counts, x='Frekuensi', y='nama_parameter', orientation='h', template='simple_white', text_auto=True)
         fig_param.update_traces(marker_color='#e74c3c')
         fig_param.update_layout(height=350, margin=dict(l=0, r=0, t=10, b=0))
-        st.plotly_chart(fig_param, use_container_width=True)
+        st.plotly_chart(fig_param, width='stretch')
     else:
         st.info("Tidak ada data pelanggaran parameter.")
 
@@ -269,7 +269,7 @@ if len(df_valid_base) > 0:
     df_summary['COD_Avg'] = df_summary['COD_Avg'].round(2)
     df_summary['DO_Avg'] = df_summary['DO_Avg'].round(2)
 
-    st.dataframe(df_summary[['nama_sungai', 'BOD_Avg', 'COD_Avg', 'DO_Avg', '% Pelanggaran', 'Status']], use_container_width=True)
+    st.dataframe(df_summary[['nama_sungai', 'BOD_Avg', 'COD_Avg', 'DO_Avg', '% Pelanggaran', 'Status']], width='stretch')
 else:
     st.info("Tidak ada data valid yang tersedia.")
 
