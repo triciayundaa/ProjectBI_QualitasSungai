@@ -1,25 +1,20 @@
-/* White Background */
+/* =========================================
+   BASE LAYOUT & BACKGROUND
+   ========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
 .stApp, [data-testid="stAppViewContainer"], .main {
-    background-color: #ffffff !important;
+    background-color: #f8fafc !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .block-container {
-    padding-top: 0rem !important;
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
-    padding-bottom: 0rem !important;
+    padding-top: 0.2rem !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 1rem !important;
     max-width: 100% !important;
-    background-color: #ffffff !important;
-}
-
-/* Card Container for Charts, Maps, and Tables */
-div[data-testid="stVerticalBlockBorder"] {
-    background-color: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 12px !important;
-    padding: 24px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
-    margin-bottom: 20px !important;
+    background-color: #f8fafc !important;
 }
 
 [data-testid="stHeader"] {
@@ -27,132 +22,231 @@ div[data-testid="stVerticalBlockBorder"] {
     display: none;
 }
 
+/* =========================================
+   STREAMLIT NATIVE CARDS (st.container border=True)
+   ========================================= */
+div[data-testid="stVerticalBlockBorder"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+    margin-bottom: 6px !important;
+}
+
+/* Make sure inner columns don't have double border or double padding if nested */
+div[data-testid="stVerticalBlockBorder"] div[data-testid="stVerticalBlockBorder"] {
+    box-shadow: none !important;
+    border: 1px solid #f1f5f9 !important;
+    padding: 4px 6px !important;
+}
+
+/* Remove default gap between Streamlit elements in containers */
+div[data-testid="stVerticalBlockBorder"] > div {
+    gap: 0.5rem !important;
+}
+
+/* Compressing container elements for a very tight layout */
+div[data-testid="stVerticalBlockBorder"] div[data-testid="element-container"] {
+    margin-bottom: -10px !important;
+}
+
+/* Reduce gap between layout columns / horizontal blocks */
+div[data-testid="column"] {
+    gap: 12px !important;
+}
+div[data-testid="column"] > div[data-testid="stVerticalBlock"] {
+    gap: 14px !important;
+}
+div[data-testid="stHorizontalBlock"] {
+    gap: 12px !important;
+}
+
+/* =========================================
+   KPI & METRIC CARDS
+   ========================================= */
 .metric-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 10px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s ease;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 130px;
+    align-items: center;
+    gap: 8px;
+    height: 65px !important;
+    box-sizing: border-box !important;
+    margin-bottom: 10px;
 }
 
 .metric-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.08);
     border-color: #cbd5e1;
 }
 
-.metric-title {
-    color: #64748b;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.metric-value {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 1.2;
-    margin: 4px 0;
-}
-
-.metric-desc {
-    color: #94a3b8;
-    font-size: 11px;
-}
-
+/* =========================================
+   ACTIONABLE INSIGHTS CARDS
+   ========================================= */
 .insight-card {
-    background: #1e293b;
+    background: #0f172a;
     border-radius: 12px;
-    padding: 22px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 12px 14px;
+    transition: all 0.25s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 290px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    min-height: 140px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
 }
 
 .insight-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
 }
 
 .insight-tag {
     color: #94a3b8 !important;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 800;
-    letter-spacing: 1.2px;
-    margin-bottom: 6px;
-}
-
-.insight-title {
-    color: #ffffff !important;
-    font-size: 16px;
-    font-weight: 600;
-    margin: 5px 0 10px 0 !important;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
 }
 
 .insight-desc {
     color: #cbd5e1 !important;
-    font-size: 12.5px;
-    line-height: 1.5;
-    text-align: justify;
-    margin-bottom: 12px;
+    font-size: 11.5px;
+    line-height: 1.45;
+    margin-bottom: 8px;
 }
 
 .insight-badge {
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 20px;
     text-align: center;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 10px;
+    font-weight: 700;
     width: fit-content;
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
-.alert-banner {
-    background-color: #fff5f5;
-    border-left: 5px solid #e53e3e;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 20px;
+/* =========================================
+   CUSTOM INPUT FIELD STYLING
+   ========================================= */
+/* Compact the selectbox widget margins to reduce gap between filters */
+div[data-testid="stSelectbox"] {
+    margin-top: -6px !important;
+    margin-bottom: -6px !important;
 }
 
-/* Dynamic status banners badges */
-.alert-badge-red {
-    background-color: #e53e3e;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-right: 10px;
-    display: inline-block;
+div[data-testid="stButton"] {
+    margin-top: -4px !important;
 }
 
-.alert-badge-green {
-    background-color: #38a169;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 700;
-    margin-right: 10px;
-    display: inline-block;
+/* Make selectbox labels bold, uppercase, grey, and smaller */
+div[data-testid="stSelectbox"] label {
+    margin-bottom: 2px !important;
 }
 
-/* Custom styling to make st.subheader slightly smaller and compact */
-h3 {
-    font-size: 1.5rem !important;
-    font-weight: 600 !important;
-    color: #1e293b !important;
+div[data-testid="stSelectbox"] label p {
+    color: #64748b !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
     margin-top: 0px !important;
-    margin-bottom: 16px !important;
+    margin-bottom: -4px !important;
+    padding: 0 !important;
 }
+
+/* Make selectbox dropdown itself compact and premium */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] {
+    border-radius: 8px !important;
+    border-color: #cbd5e1 !important;
+    min-height: 30px !important;
+    height: 30px !important;
+}
+
+/* Force the internal BaseWeb control container height and padding */
+div[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0px 8px !important;
+}
+
+/* Custom size for selectbox option text inside dropdown container */
+div[data-testid="stSelectbox"] [data-baseweb="select"] * {
+    font-size: 11px !important;
+    color: #1e293b !important;
+}
+
+/* Adjust inner padding of the selectbox display container and center vertically */
+div[data-testid="stSelectbox"] [data-baseweb="select"] div[role="button"] {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Center and scale the selectbox indicators (arrows) */
+div[data-testid="stSelectbox"] [data-baseweb="select"] svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* Button style customization */
+div[data-testid="stButton"] button {
+    background-color: #1044A5 !important;
+    color: white !important;
+    border-radius: 6px !important;
+    border: none !important;
+    transition: all 0.2s;
+    height: 24px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 2px 4px !important;
+    box-shadow: 0 2px 4px rgba(16, 68, 165, 0.1);
+}
+
+div[data-testid="stButton"] button p {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: white !important;
+}
+
+div[data-testid="stButton"] button:hover {
+    background-color: #0c3483 !important;
+    box-shadow: 0 4px 8px rgba(16, 68, 165, 0.3);
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   PLOTLY & FOLIUM STYLING INJECTS
+   ========================================= */
+iframe {
+    border-radius: 8px !important;
+}
+
+/* =========================================
+   HTML TABLE HOVER STATES
+   ========================================= */
+tr:hover {
+    background-color: #f8fafc !important;
+}
+
+/* =========================================
+   GAP BETWEEN CARD ROWS
+   ========================================= */
+div[data-testid="column"] div[data-testid="stVerticalBlock"] div[data-testid="stHorizontalBlock"] {
+    margin-bottom: 14px !important;
+}
+
+
+

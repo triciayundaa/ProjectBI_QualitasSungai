@@ -63,17 +63,38 @@ def generate_alert_banner_html(valid_records, filter_sungai, pct_exceed):
 
     if pct_exceed > 30.0:
         return f"""
-            <div class="alert-banner">
-                <span class="alert-badge-red">DARURAT KUALITAS AIR</span> 
-                <b>{pct_exceed:.1f}%</b> sampel parameter air sungai terpantau melampaui batas ambang baku mutu nasional (PP No. 22/2021). 
-                {river_text} terdeteksi memiliki kontaminasi {param_text} ekstrem yang memerlukan tindakan penegakan hukum dan restorasi ekologi segera.
+            <div style="background-color: #fffafb; border: 1px solid #fee2e2; border-left: 5px solid #ef4444; padding: 8px 12px; border-radius: 8px; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; position: relative;">
+                <!-- Icon -->
+                <div style="color: #ef4444; margin-top: 1px; flex-shrink: 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12" y1="17" y2="17"/></svg>
+                </div>
+                <!-- Text Content -->
+                <div style="flex-grow: 1;">
+                    <div style="color: #b91c1c; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 1px; text-transform: uppercase;">DARURAT KUALITAS AIR</div>
+                    <div style="color: #4b5563; font-size: 11px; line-height: 1.4;">
+                        <strong>{pct_exceed:.1f}%</strong> sampel parameter air sungai terpantau melampaui batas ambang baku mutu nasional (PP No. 22/2021). 
+                        {river_text} terdeteksi memiliki kontaminasi {param_text} ekstrem yang memerlukan tindakan penegakan hukum dan restorasi ekologi segera.
+                    </div>
+                </div>
+                
             </div>
         """
     else:
         return f"""
-            <div style="background-color: #f6ffed; border-left: 5px solid #52c41a; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <span class="alert-badge-green">KONDISI AIR AMAN</span> 
-                Tingkat polusi berada di angka aman <b>{pct_exceed:.1f}%</b>. Pengukuran menunjukkan kondisi air sungai {filter_sungai if filter_sungai != 'Semua Sungai' else 'DKI Jakarta'} secara umum memenuhi baku mutu nasional untuk kriteria terfilter.
+            <div style="background-color: #f6ffed; border: 1px solid #d9f7be; border-left: 5px solid #52c41a; padding: 8px 12px; border-radius: 8px; display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; position: relative;">
+                <!-- Icon -->
+                <div style="color: #52c41a; margin-top: 1px; flex-shrink: 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <!-- Text Content -->
+                <div style="flex-grow: 1;">
+                    <div style="color: #137213; font-weight: 700; font-size: 11px; letter-spacing: 0.5px; margin-bottom: 1px; text-transform: uppercase;">KONDISI AIR AMAN</div>
+                    <div style="color: #4b5563; font-size: 11px; line-height: 1.4;">
+                        Tingkat polusi berada di angka aman <strong>{pct_exceed:.1f}%</strong>. Pengukuran menunjukkan kondisi air sungai {filter_sungai if filter_sungai != 'Semua Sungai' else 'DKI Jakarta'} secara umum memenuhi baku mutu nasional untuk kriteria terfilter.
+                    </div>
+                </div>
+                <!-- Close button -->
+                <div style="color: #9ca3af; cursor: pointer; font-size: 14px; font-weight: 300; line-height: 1; flex-shrink: 0; padding-left: 8px;" onclick="this.parentElement.style.display='none'">✕</div>
             </div>
         """
 
