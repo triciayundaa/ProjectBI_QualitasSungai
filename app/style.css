@@ -1,6 +1,30 @@
+/* White Background */
+.stApp, [data-testid="stAppViewContainer"], .main {
+    background-color: #ffffff !important;
+}
+
 .block-container {
-    padding-top: 1.5rem;
-    padding-bottom: 1rem;
+    padding-top: 0rem !important;
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+    padding-bottom: 0rem !important;
+    max-width: 100% !important;
+    background-color: #ffffff !important;
+}
+
+/* Card Container for Charts, Maps, and Tables */
+div[data-testid="stVerticalBlockBorder"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    padding: 24px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    margin-bottom: 20px !important;
+}
+
+[data-testid="stHeader"] {
+    height: 0px;
+    display: none;
 }
 
 .metric-card {
@@ -61,7 +85,7 @@
 }
 
 .insight-tag {
-    color: #94a3b8;
+    color: #94a3b8 !important;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1.2px;
@@ -69,14 +93,14 @@
 }
 
 .insight-title {
-    color: #ffffff;
-    font-size: 15px;
+    color: #ffffff !important;
+    font-size: 16px;
     font-weight: 600;
-    margin: 5px 0 10px 0;
+    margin: 5px 0 10px 0 !important;
 }
 
 .insight-desc {
-    color: #cbd5e1;
+    color: #cbd5e1 !important;
     font-size: 12.5px;
     line-height: 1.5;
     text-align: justify;
@@ -99,4 +123,36 @@
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+/* Dynamic status banners badges */
+.alert-badge-red {
+    background-color: #e53e3e;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.alert-badge-green {
+    background-color: #38a169;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+/* Custom styling to make st.subheader slightly smaller and compact */
+h3 {
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    margin-top: 0px !important;
+    margin-bottom: 16px !important;
 }

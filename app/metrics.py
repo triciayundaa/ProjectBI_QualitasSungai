@@ -64,7 +64,7 @@ def generate_alert_banner_html(valid_records, filter_sungai, pct_exceed):
     if pct_exceed > 30.0:
         return f"""
             <div class="alert-banner">
-                <span style="font-size: 18px; font-weight: bold; color: #c53030;">🚨 DARURAT KUALITAS AIR:</span> 
+                <span class="alert-badge-red">DARURAT KUALITAS AIR</span> 
                 <b>{pct_exceed:.1f}%</b> sampel parameter air sungai terpantau melampaui batas ambang baku mutu nasional (PP No. 22/2021). 
                 {river_text} terdeteksi memiliki kontaminasi {param_text} ekstrem yang memerlukan tindakan penegakan hukum dan restorasi ekologi segera.
             </div>
@@ -72,7 +72,7 @@ def generate_alert_banner_html(valid_records, filter_sungai, pct_exceed):
     else:
         return f"""
             <div style="background-color: #f6ffed; border-left: 5px solid #52c41a; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <span style="font-size: 18px; font-weight: bold; color: #237804;">🟢 KONDISI AIR AMAN/SEDANG:</span> 
+                <span class="alert-badge-green">KONDISI AIR AMAN</span> 
                 Tingkat polusi berada di angka aman <b>{pct_exceed:.1f}%</b>. Pengukuran menunjukkan kondisi air sungai {filter_sungai if filter_sungai != 'Semua Sungai' else 'DKI Jakarta'} secara umum memenuhi baku mutu nasional untuk kriteria terfilter.
             </div>
         """
