@@ -201,22 +201,22 @@ with col_g2:
 # =========================================
 st.subheader("🧪 Rata-rata Nilai Kadar BOD & COD per Sungai Utama")
 # Perbaikan: Menggunakan df_base (bukan df_filtered) agar data Kimia tidak hilang saat filter "Biologi" aktif
-df_bod_cod = df_base[df_base['nama_parameter'].isin(['BOD', 'COD'])].groupby(['nama_sungai', 'nama_parameter'])['hasil_pengukuran'].mean().reset_index()
+df_bod_cod = df_base[df_base['nama_parameter'].isin(['Bod', 'Cod'])].groupby(['nama_sungai', 'nama_parameter'])['hasil_pengukuran'].mean().reset_index()
 
 fig_bod_cod = go.Figure()
 
 if len(df_bod_cod) > 0:
     df_bod_cod_pivot = df_bod_cod.pivot(index='nama_sungai', columns='nama_parameter', values='hasil_pengukuran').reset_index()
     
-    if 'BOD' not in df_bod_cod_pivot.columns:
-        df_bod_cod_pivot['BOD'] = 0.0
-    if 'COD' not in df_bod_cod_pivot.columns:
-        df_bod_cod_pivot['COD'] = 0.0
+    if 'Bod' not in df_bod_cod_pivot.columns:
+        df_bod_cod_pivot['Bod'] = 0.0
+    if 'Cod' not in df_bod_cod_pivot.columns:
+        df_bod_cod_pivot['Cod'] = 0.0
         
     df_bod_cod_pivot = df_bod_cod_pivot.dropna().tail(8)
     
-    fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['BOD'], name='BOD (mg/L)', marker_color='#2ecc71'))
-    fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['COD'], name='COD (mg/L)', marker_color='#3498db'))
+    fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['Bod'], name='BOD (mg/L)', marker_color='#2ecc71'))
+    fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['Cod'], name='COD (mg/L)', marker_color='#3498db'))
     fig_bod_cod.update_layout(barmode='group', height=350, template='simple_white', margin=dict(l=0, r=0, t=10, b=0))
 else:
     fig_bod_cod.update_layout(title="Tidak ada data BOD/COD untuk filter ini", height=350)
@@ -252,9 +252,9 @@ if len(df_valid_base) > 0:
         Total_Pelanggaran=('status_exceed', 'sum')
     ).reset_index()
 
-    df_params_avg = df_valid_base[df_valid_base['nama_parameter'].isin(['BOD', 'COD', 'DO'])].groupby(['nama_sungai', 'nama_parameter'])['hasil_pengukuran'].mean().unstack(fill_value=0.0).reset_index()
+    df_params_avg = df_valid_base[df_valid_base['nama_parameter'].isin(['Bod', 'Cod', 'Do'])].groupby(['nama_sungai', 'nama_parameter'])['hasil_pengukuran'].mean().unstack(fill_value=0.0).reset_index()
     
-    for col in ['BOD', 'COD', 'DO']:
+    for col in ['Bod', 'Cod', 'Do']:
         if col not in df_params_avg.columns:
             df_params_avg[col] = 0.0
             
@@ -290,7 +290,7 @@ langgar_bio = df_bio_all['status_exceed'].sum()
 pct_bio_real = round((langgar_bio / total_bio) * 100, 1) if total_bio > 0 else 96.4
 
 # Insight 02: Deteksi Otomatis Sungai dengan COD Tertinggi
-df_cod_only = df_valid_base[df_valid_base['nama_parameter'] == 'COD']
+df_cod_only = df_valid_base[df_valid_base['nama_parameter'] == 'Cod']
 if len(df_cod_only) > 0:
     idx_max_cod = df_cod_only.groupby('nama_sungai')['hasil_pengukuran'].mean().idxmax()
     val_max_cod = round(df_cod_only.groupby('nama_sungai')['hasil_pengukuran'].mean().max(), 1)
@@ -299,7 +299,7 @@ else:
     idx_max_cod, val_max_cod, kali_lipat_bm = "Buaran", 144.5, 5.8
 
 # Insight 03: Deteksi Otomatis Sungai dengan Oksigen (DO) Paling Drop
-df_do_only = df_valid_base[df_valid_base['nama_parameter'] == 'DO']
+df_do_only = df_valid_base[df_valid_base['nama_parameter'] == 'Do']
 if len(df_do_only) > 0:
     idx_min_do = df_do_only.groupby('nama_sungai')['hasil_pengukuran'].mean().idxmin()
     val_min_do = round(df_do_only.groupby('nama_sungai')['hasil_pengukuran'].mean().min(), 2)
