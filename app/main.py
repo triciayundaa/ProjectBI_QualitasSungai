@@ -146,9 +146,9 @@ with col_m5:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # =========================================
-# 6. ROW 1: PETA (KIRI 50%) & RANKING PELANGGARAN (KANAN 50%)
+# 6. ROW 1: PETA (KIRI 50%) & STACK VISUALISASI PELANGGARAN (KANAN 50%)
 # =========================================
-col_map, col_chart_rank = st.columns([1, 1])
+col_map, col_right = st.columns([1, 1])
 
 with col_map:
     with st.container(border=True):
@@ -197,15 +197,15 @@ with col_map:
                     weight=2
                 ).add_to(m)
 
-            st_folium(m, height=450, use_container_width=True)
+            st_folium(m, height=580, use_container_width=True)
         else:
             st.info("Tidak ada data koordinat geografis yang valid untuk filter saat ini.")
 
-with col_chart_rank:
+with col_right:
     with st.container(border=True):
         st.subheader("Jumlah Pelanggaran Baku Mutu per Sungai")
         df_rank = valid_records[valid_records['status_exceed'] == True].groupby('nama_sungai').size().reset_index(name='Jumlah Pelanggaran')
-        df_rank = df_rank.sort_values(by='Jumlah Pelanggaran', ascending=True).tail(12)
+        df_rank = df_rank.sort_values(by='Jumlah Pelanggaran', ascending=True).tail(8)
         
         fig_rank = px.bar(
             df_rank, x='Jumlah Pelanggaran', y='nama_sungai', orientation='h',
@@ -213,7 +213,7 @@ with col_chart_rank:
             template='simple_white'
         )
         fig_rank.update_layout(
-            height=450, 
+            height=230, 
             margin=dict(l=0, r=0, t=10, b=0), 
             showlegend=False,
             paper_bgcolor='rgba(0,0,0,0)', 
@@ -221,14 +221,6 @@ with col_chart_rank:
         )
         st.plotly_chart(fig_rank, width='stretch')
 
-st.markdown("<br>", unsafe_allow_html=True)
-
-# =========================================
-# 7. ROW 2: TREN (KIRI 50%) & TOP 10 PARAMETERS (KANAN 50%)
-# =========================================
-col_trend, col_param = st.columns([1, 1])
-
-with col_trend:
     with st.container(border=True):
         st.subheader("Tren Pelanggaran per Periode")
         df_trend = valid_records[valid_records['status_exceed'] == True].groupby('periode_pemantauan').size().reset_index(name='Pelanggaran')
@@ -236,12 +228,19 @@ with col_trend:
         fig_trend = px.line(df_trend, x='periode_pemantauan', y='Pelanggaran', markers=True, template='simple_white')
         fig_trend.update_traces(line_color='#d93025', line_width=4, marker=dict(size=10))
         fig_trend.update_layout(
-            height=330, 
+            height=230, 
             margin=dict(l=0, r=0, t=10, b=0),
             paper_bgcolor='rgba(0,0,0,0)', 
             plot_bgcolor='rgba(0,0,0,0)'
         )
         st.plotly_chart(fig_trend, width='stretch')
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# =========================================
+# 7. ROW 2: TOP 10 PARAMETERS (KIRI 50%) & KADAR BOD/COD (KANAN 50%)
+# =========================================
+col_param, col_bod_cod = st.columns([1, 1])
 
 with col_param:
     with st.container(border=True):
@@ -262,40 +261,36 @@ with col_param:
         else:
             st.info("Tidak ada data pelanggaran parameter.")
 
-st.markdown("<br>", unsafe_allow_html=True)
+with col_bod_cod:
+    with st.container(border=True):
+        st.subheader("Rata-rata Nilai Kadar BOD & COD per Sungai Utama")
+        df_bod_cod = df_base[df_base['nama_parameter'].isin(['Bod', 'Cod'])].groupby(['nama_sungai', 'nama_parameter'])['hasil_pengukuran'].mean().reset_index()
 
-# =========================================
-# 8. ROW 3: BOD/COD (FULL-WIDTH)
-# =========================================
-with st.container(border=True):
-    st.subheader("Rata-rata Nilai Kadar BOD & COD per Sungai Utama")
-    df_bod_cod = df_base[df_base['nama_parameter'].isin(['Bod', 'Cod'])].groupby(['nama_sungai', 'nama_parameter'])['hasil_pengukuran'].mean().reset_index()
+        fig_bod_cod = go.Figure()
 
-    fig_bod_cod = go.Figure()
-
-    if len(df_bod_cod) > 0:
-        df_bod_cod_pivot = df_bod_cod.pivot(index='nama_sungai', columns='nama_parameter', values='hasil_pengukuran').reset_index()
-        
-        if 'Bod' not in df_bod_cod_pivot.columns:
-            df_bod_cod_pivot['Bod'] = 0.0
-        if 'Cod' not in df_bod_cod_pivot.columns:
-            df_bod_cod_pivot['Cod'] = 0.0
+        if len(df_bod_cod) > 0:
+            df_bod_cod_pivot = df_bod_cod.pivot(index='nama_sungai', columns='nama_parameter', values='hasil_pengukuran').reset_index()
             
-        df_bod_cod_pivot = df_bod_cod_pivot.dropna().tail(12) # Tampilkan 12 sungai teratas agar lega
-        
-        fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['Bod'], name='BOD (mg/L)', marker_color='#2ecc71'))
-        fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['Cod'], name='COD (mg/L)', marker_color='#3498db'))
-        fig_bod_cod.update_layout(
-            barmode='group', 
-            height=360, 
-            template='simple_white', 
-            margin=dict(l=0, r=0, t=10, b=0),
-            paper_bgcolor='rgba(0,0,0,0)', 
-            plot_bgcolor='rgba(0,0,0,0)'
-        )
-        st.plotly_chart(fig_bod_cod, width='stretch')
-    else:
-        st.info("Tidak ada data BOD/COD untuk filter ini.")
+            if 'Bod' not in df_bod_cod_pivot.columns:
+                df_bod_cod_pivot['Bod'] = 0.0
+            if 'Cod' not in df_bod_cod_pivot.columns:
+                df_bod_cod_pivot['Cod'] = 0.0
+                
+            df_bod_cod_pivot = df_bod_cod_pivot.dropna().tail(12) # Tampilkan 12 sungai teratas agar lega
+            
+            fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['Bod'], name='BOD (mg/L)', marker_color='#2ecc71'))
+            fig_bod_cod.add_trace(go.Bar(x=df_bod_cod_pivot['nama_sungai'], y=df_bod_cod_pivot['Cod'], name='COD (mg/L)', marker_color='#3498db'))
+            fig_bod_cod.update_layout(
+                barmode='group', 
+                height=330, 
+                template='simple_white', 
+                margin=dict(l=0, r=0, t=10, b=0),
+                paper_bgcolor='rgba(0,0,0,0)', 
+                plot_bgcolor='rgba(0,0,0,0)'
+            )
+            st.plotly_chart(fig_bod_cod, width='stretch')
+        else:
+            st.info("Tidak ada data BOD/COD untuk filter ini.")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
