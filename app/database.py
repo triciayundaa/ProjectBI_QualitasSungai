@@ -7,8 +7,8 @@ import urllib.parse
 # KONEKSI KE DATABASE CLOUD NEON.TECH
 # =========================================
 DB_USER = "neondb_owner"                                    
-DB_PASSWORD = "npg_zVKmec8J7akt"        
-DB_HOST = "ep-proud-breeze-aptumjmv-pooler.c-7.us-east-1.aws.neon.tech"                
+DB_PASSWORD = "npg_zLeYAr0RQu6X"        
+DB_HOST = "ep-polished-frost-aivnaxzq-pooler.c-4.us-east-1.aws.neon.tech"                
 DB_NAME = "neondb"                                         
 
 parsed_password = urllib.parse.quote_plus(DB_PASSWORD)

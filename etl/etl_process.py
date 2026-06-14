@@ -50,9 +50,9 @@ print("=========================================")
 # =========================================
 # 1. KONFIGURASI DATABASE CLOUD (NEON.TECH)
 # =========================================
-DB_USER = "neondb_owner"                                  
-DB_PASSWORD = "npg_zVKmec8J7akt"        
-DB_HOST = "ep-proud-breeze-aptumjmv-pooler.c-7.us-east-1.aws.neon.tech"                
+DB_USER = "neondb_owner"                                    
+DB_PASSWORD = "npg_zLeYAr0RQu6X"        
+DB_HOST = "ep-polished-frost-aivnaxzq-pooler.c-4.us-east-1.aws.neon.tech"                
 DB_NAME = "neondb"                                         
 
 parsed_password = urllib.parse.quote_plus(DB_PASSWORD)
@@ -89,13 +89,13 @@ df_clean['parameter'] = df_clean['parameter'].str.strip()
 df_clean['parameter'] = df_clean['parameter'].apply(lambda x: 'pH' if x.upper() == 'PH' else x.title())
 df_clean['jenis_parameter'] = df_clean['jenis_parameter'].str.strip().str.title()
 
-df_clean['latitude'] = df_clean['latitude'].apply(clean_coordinate)
-df_clean['longitude'] = df_clean['longitude'].apply(clean_coordinate)
-
 df_clean['periode_pemantauan'] = df_clean['periode_pemantauan'].astype(str).str.strip()
 df_clean['periode_pemantauan'] = df_clean['periode_pemantauan'].apply(
     lambda x: f"Periode {x}" if x in ['1', '2', '3', '4'] else x
 )
+
+df_clean['latitude'] = df_clean['latitude'].apply(clean_coordinate)
+df_clean['longitude'] = df_clean['longitude'].apply(clean_coordinate)
 
 df_clean['is_valid'] = True
 df_clean.loc[df_clean['hasil_pengukuran'] <= 0, 'is_valid'] = False

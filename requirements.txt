@@ -2,7 +2,6 @@ streamlit
 pandas
 numpy
 sqlalchemy
-pymysql
 openpyxl
 plotly
 folium

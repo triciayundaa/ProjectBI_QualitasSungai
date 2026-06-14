@@ -246,7 +246,7 @@ with col_main:
                 {svg_waves}
             </div>
             <div style="display: flex; flex-direction: column;">
-                <span style="color: #64748b; font-size: 7.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">DO Rata-rata</span>
+                <span style="color: #64748b; font-size: 7.5px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;">DO Rata-rata Terendah</span>
                 <span style="color: #14b8a6; font-size: 13.5px; font-weight: 800; line-height: 1.1; margin: 1px 0;">{val_do_str}</span>
                 <span style="color: #94a3b8; font-size: 7.5px; line-height: 1.1;">{desc_do_str}</span>
             </div>
