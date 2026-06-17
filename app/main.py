@@ -409,20 +409,27 @@ with col_main:
         with st.container(border=True):
             render_html("""
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 11px; font-weight: 700; color: #1e293b;">Tren Pelanggaran per Periode</span>
+                <span style="font-size: 11px; font-weight: 700; color: #1e293b;">Tren Persentase Pelanggaran per Periode</span>
             </div>
             """)
             
-            df_trend = valid_records[valid_records['status_exceed'] == True].groupby('periode_pemantauan').size().reset_index(name='Pelanggaran')
+            df_trend = valid_records.groupby(['tahun_data', 'label_periode']).agg(
+                total_sampel=('status_exceed', 'count'),
+                total_pelanggaran=('status_exceed', 'sum')
+            ).reset_index()
+            df_trend['% Pelanggaran'] = (df_trend['total_pelanggaran'] / df_trend['total_sampel'] * 100).round(1)
+            df_trend = df_trend.sort_values(by=['tahun_data', 'label_periode'])
             
             if len(df_trend) > 0:
-                fig_trend = px.line(df_trend, x='periode_pemantauan', y='Pelanggaran', markers=True, template='simple_white')
+                fig_trend = px.line(df_trend, x='label_periode', y='% Pelanggaran', markers=True, template='simple_white')
                 fig_trend.update_traces(line_color='#d93025', line_width=4, marker=dict(size=10))
                 fig_trend.update_layout(
                     height=230, 
                     margin=dict(l=0, r=0, t=10, b=0),
                     paper_bgcolor='rgba(0,0,0,0)', 
-                    plot_bgcolor='rgba(0,0,0,0)'
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    yaxis_title='% Pelanggaran',
+                    xaxis_title=None
                 )
                 st.plotly_chart(fig_trend, width='stretch')
             else:
