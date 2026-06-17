@@ -164,13 +164,13 @@ try:
         print("[SUCCESS] Struktur tabel berhasil diinisialisasi.")
         
         print("-> Mengisi Dim_Sungai...")
-        sungai_data = df_clean[['nama_sungai', 'titik_sampel', 'latitude', 'longitude']].drop_duplicates()
+        sungai_data = df_clean[['nama_sungai', 'titik_sampel', 'latitude', 'longitude']].drop_duplicates(subset=['titik_sampel'])
         sungai_data.columns = ['nama_sungai', 'id_titik_sampel', 'latitude', 'longitude']
         sungai_data['wilayah_admin'] = 'DKI Jakarta'
         sungai_data.to_sql('dim_sungai', con=conn, if_exists='append', index=False)
         
         print("-> Mengisi Dim_Parameter...")
-        param_data = df_clean[['parameter', 'jenis_parameter', 'baku_mutu_min', 'baku_mutu_max']].drop_duplicates()
+        param_data = df_clean[['parameter', 'jenis_parameter', 'baku_mutu_min', 'baku_mutu_max']].drop_duplicates(subset=['parameter'])
         param_data.columns = ['nama_parameter', 'jenis_parameter', 'baku_mutu_min', 'baku_mutu_max']
         param_data['satuan'] = 'mg/L'
         param_data['keterangan'] = 'Normalisasi otomatis via ETL'
@@ -196,9 +196,9 @@ try:
         print("-> Memetakan ID dan Mengisi Fact_Pengukuran...")
         
         # Mengambil data ID resmi untuk pencocokan ID
-        db_sungai = pd.read_sql("SELECT id_sungai, id_titik_sampel, nama_sungai FROM dim_sungai", con=conn)
-        db_param = pd.read_sql("SELECT id_parameter, nama_parameter FROM dim_parameter", con=conn)
-        db_waktu = pd.read_sql("SELECT id_waktu, periode_pemantauan, tahun_data FROM dim_waktu", con=conn)
+        db_sungai = pd.read_sql("SELECT id_sungai, id_titik_sampel, nama_sungai FROM dim_sungai", con=conn).drop_duplicates(subset=['id_titik_sampel'])
+        db_param = pd.read_sql("SELECT id_parameter, nama_parameter FROM dim_parameter", con=conn).drop_duplicates(subset=['nama_parameter'])
+        db_waktu = pd.read_sql("SELECT id_waktu, periode_pemantauan, tahun_data FROM dim_waktu", con=conn).drop_duplicates(subset=['periode_pemantauan', 'tahun_data'])
         
         # Proses merge data fakta dengan id tabel dimensi secara aman
         df_fact = df_clean.merge(db_sungai, left_on='titik_sampel', right_on='id_titik_sampel', how='left')
