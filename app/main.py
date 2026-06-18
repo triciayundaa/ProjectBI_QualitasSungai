@@ -335,7 +335,7 @@ with col_main:
         with st.container(border=True):
             render_html("""
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 11px; font-weight: 700; color: #1e293b;">Jumlah Pelanggaran Baku Mutu per Sungai</span>
+                <span style="font-size: 11px; font-weight: 700; color: #1e293b;">Top 10 Jumlah Pelanggaran Baku Mutu Sungai Tertinggi</span>
             </div>
             """)
             
@@ -439,7 +439,7 @@ with col_main:
         with st.container(border=True):
             render_html("""
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <span style="font-size: 11px; font-weight: 700; color: #1e293b;">Perbandingan BOD & COD Rata-rata per Sungai</span>
+                <span style="font-size: 11px; font-weight: 700; color: #1e293b;">Top 5 Perbandingan BOD & COD Rata-rata per Sungai</span>
             </div>
             """)
             

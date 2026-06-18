@@ -16,7 +16,7 @@ DATABASE_URL = f"postgresql+psycopg2://{DB_USER}:{parsed_password}@{DB_HOST}/{DB
 
 @st.cache_resource
 def get_db_engine():
-    return create_engine(DATABASE_URL)
+    return create_engine(DATABASE_URL, pool_pre_ping=True)
 
 try:
     engine = get_db_engine()
@@ -54,5 +54,6 @@ def load_analytics_data_v2():
         JOIN dim_waktu w ON f.id_waktu = w.id_waktu
         JOIN dim_status st ON f.id_status = st.id_status
     """
-    df = pd.read_sql(query, engine)
+    with engine.connect() as conn:
+        df = pd.read_sql(query, conn)
     return df
