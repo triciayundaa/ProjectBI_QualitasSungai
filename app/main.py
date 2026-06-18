@@ -473,8 +473,8 @@ with col_main:
                 ))
                 
                 # Tambahkan garis batas aman
-                fig_bod_cod.add_hline(y=3, line_dash="dash", line_color="#10b981", annotation_text="Batas BOD (3)", annotation_position="top left", annotation_font_size=9, annotation_font_color="#10b981", opacity=0.7)
-                fig_bod_cod.add_hline(y=25, line_dash="dash", line_color="#2563eb", annotation_text="Batas COD (25)", annotation_position="top left", annotation_font_size=9, annotation_font_color="#2563eb", opacity=0.7)
+                fig_bod_cod.add_hline(y=3, line_dash="dash", line_width=2, line_color="#10b981", annotation_text="Batas BOD (3)", annotation_position="bottom right", annotation_font_size=10, annotation_font_color="#000000", opacity=1)
+                fig_bod_cod.add_hline(y=25, line_dash="dash", line_width=2, line_color="#2563eb", annotation_text="Batas COD (25)", annotation_position="top right", annotation_font_size=10, annotation_font_color="#000000", opacity=1)
                 
                 fig_bod_cod.update_layout(
                     barmode='group', 
