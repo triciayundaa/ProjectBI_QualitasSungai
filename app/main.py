@@ -471,6 +471,11 @@ with col_main:
                     name='COD (mg/L)', 
                     marker_color='#2563eb'
                 ))
+                
+                # Tambahkan garis batas aman
+                fig_bod_cod.add_hline(y=3, line_dash="dash", line_color="#10b981", annotation_text="Batas BOD (3)", annotation_position="top left", annotation_font_size=9, annotation_font_color="#10b981", opacity=0.7)
+                fig_bod_cod.add_hline(y=25, line_dash="dash", line_color="#2563eb", annotation_text="Batas COD (25)", annotation_position="top left", annotation_font_size=9, annotation_font_color="#2563eb", opacity=0.7)
+                
                 fig_bod_cod.update_layout(
                     barmode='group', 
                     height=315, 
